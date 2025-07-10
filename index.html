@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroLint VS Code Extension - Real-time Code Analysis</title>
+    <meta name="description" content="Get real-time code analysis and automated fixes directly in VS Code with the NeuroLint extension. Download now from the VS Code Marketplace.">
+    <meta name="keywords" content="VS Code extension, code analysis, React, TypeScript, Next.js, ESLint, Prettier">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vs.neurolint.dev/">
+    <meta property="og:title" content="NeuroLint VS Code Extension">
+    <meta property="og:description" content="Real-time code analysis and automated fixes in your editor">
+    <meta property="og:image" content="https://vs.neurolint.dev/images/social-preview.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://vs.neurolint.dev/">
+    <meta property="twitter:title" content="NeuroLint VS Code Extension">
+    <meta property="twitter:description" content="Real-time code analysis and automated fixes in your editor">
+    <meta property="twitter:image" content="https://vs.neurolint.dev/images/social-preview.jpg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    
+    <style>
+        :root {
+            --primary-blue: #3b82f6;
+            --blue-light: #60a5fa;
+            --blue-lighter: #93c5fd;
+            --background: #000000;
+            --surface: #0a0a0a;
+            --surface-2: #18181b;
+            --text: #fafafa;
+            --text-secondary: #a1a1aa;
+            --border: #27272a;
+            --accent: #22c55e;
+            --warning: #fbbf24;
+            --error: #ef4444;
+            
+            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .section {
+            padding: 4rem 0;
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--blue-light));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue), var(--blue-light));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface);
+            border-color: var(--primary-blue);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 6rem 0;
+            text-align: center;
+            background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text), var(--blue-lighter));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .extension-preview {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .vscode-header {
+            background: var(--surface-2);
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .vscode-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot.red { background: #ef4444; }
+        .dot.yellow { background: #fbbf24; }
+        .dot.green { background: #22c55e; }
+
+        .vscode-tab {
+            background: var(--surface);
+            padding: 0.5rem 1rem;
+            border-radius: 4px 4px 0 0;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .code-editor {
+            background: var(--background);
+            padding: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .code-line {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .line-number {
+            color: var(--text-secondary);
+            width: 2rem;
+            text-align: right;
+            margin-right: 1rem;
+            user-select: none;
+        }
+
+        .code-content {
+            flex: 1;
+        }
+
+        .syntax-error {
+            background: rgba(239, 68, 68, 0.2);
+            border-bottom: 2px wavy var(--error);
+            border-radius: 2px;
+        }
+
+        .syntax-warning {
+            background: rgba(251, 191, 36, 0.2);
+            border-bottom: 2px wavy var(--warning);
+            border-radius: 2px;
+        }
+
+        .quick-fix {
+            position: absolute;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-top: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            font-size: 0.75rem;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.2s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--primary-blue);
+            transform: translateY(-2px);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--blue-light));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Installation Steps */
+        .install-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .install-step {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--blue-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .install-step h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .install-step p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 3rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+            padding-top: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero {
+                padding: 4rem 0;
+            }
+            
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .section {
+                padding: 3rem 0;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Code syntax highlighting */
+        .keyword { color: #c792ea; }
+        .string { color: #c3e88d; }
+        .comment { color: #546e7a; }
+        .function { color: #82aaff; }
+        .operator { color: #89ddff; }
+        .number { color: #f78c6c; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="container">
+            <div class="nav">
+                <a href="https://neurolint.dev" class="logo">
+                    <div class="logo-icon">N</div>
+                    NeuroLint
+                </a>
+                <ul class="nav-links">
+                    <li><a href="https://neurolint.dev">Home</a></li>
+                    <li><a href="https://app.neurolint.dev">Web App</a></li>
+                    <li><a href="https://docs.neurolint.dev">Docs</a></li>
+                    <li><a href="https://forum.neurolint.dev">Forum</a></li>
+                </ul>
+                <a href="#install" class="btn btn-primary">Install Extension</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Code Smarter with NeuroLint</h1>
+            <p>Get real-time code analysis, automated fixes, and intelligent suggestions directly in VS Code. Transform your development workflow with advanced AST-based transformations.</p>
+            
+            <div class="hero-actions">
+                <a href="vscode:extension/neurolint.neurolint-vscode" class="btn btn-primary">
+                    <span>⚡</span> Install from VS Code
+                </a>
+                <a href="https://marketplace.visualstudio.com/items?itemName=neurolint.neurolint-vscode" class="btn btn-secondary">
+                    <span>🔗</span> View on Marketplace
+                </a>
+            </div>
+
+            <!-- VS Code Preview -->
+            <div class="extension-preview animate-fade-in-up">
+                <div class="vscode-header">
+                    <div class="vscode-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <div class="vscode-tab">UserList.tsx</div>
+                </div>
+                <div class="code-editor">
+                    <div class="code-line">
+                        <span class="line-number">1</span>
+                        <span class="code-content"><span class="keyword">import</span> <span class="function">React</span> <span class="keyword">from</span> <span class="string">'react'</span>;</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="line-number">2</span>
+                        <span class="code-content"></span>
+                    </div>
+                    <div class="code-line">
+                        <span class="line-number">3</span>
+                        <span class="code-content"><span class="keyword">function</span> <span class="function">UserList</span>({ users }) {</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="line-number">4</span>
+                        <span class="code-content">  <span class="keyword">return</span> (</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="line-number">5</span>
+                        <span class="code-content">    &lt;<span class="function">div</span>&gt;</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="line-number">6</span>
+                        <span class="code-content">      {users.<span class="function">map</span>(user =&gt; (</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="line-number">7</span>
+                        <span class="code-content">        &lt;<span class="function">div</span> <span class="syntax-warning">className="user"</span>&gt;{user.name}&lt;/<span class="function">div</span>&gt;</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="line-number">8</span>
+                        <span class="code-content">      ))}</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="line-number">9</span>
+                        <span class="code-content">    &lt;/<span class="function">div</span>&gt;</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="line-number">10</span>
+                        <span class="code-content">  );</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="line-number">11</span>
+                        <span class="code-content">}</span>
+                    </div>
+                </div>
+                <div class="quick-fix">
+                    💡 <strong>NeuroLint Quick Fix:</strong> Add missing key prop to improve React performance
+                    <br><span style="color: var(--accent);">⚡ Click to apply: &lt;div key={user.id} className="user"&gt;</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;">Why Developers Love NeuroLint</h2>
+                <p style="font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Intelligent code analysis that understands your codebase and provides meaningful improvements</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Real-time Analysis</h3>
+                    <p>Get instant feedback as you type. NeuroLint analyzes your code in real-time and highlights issues before you save.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>One-Click Fixes</h3>
+                    <p>Apply automated fixes with a single click. From missing keys to SSR guards, NeuroLint handles the tedious work.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Smart Suggestions</h3>
+                    <p>AI-powered recommendations based on your code patterns. Learn best practices through intelligent suggestions.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Framework Aware</h3>
+                    <p>Specialized analysis for React, Next.js, and TypeScript. Understands framework-specific patterns and anti-patterns.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Detailed Reports</h3>
+                    <p>Comprehensive analysis reports with explanations. Understand why changes are suggested and how they improve your code.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Safe Transformations</h3>
+                    <p>AST-based transformations ensure your code remains functional. Built-in validation prevents breaking changes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Installation Section -->
+    <section id="install" class="section" style="background: var(--surface);">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;">Get Started in Seconds</h2>
+                <p style="color: var(--text-secondary);">Three simple ways to install the NeuroLint VS Code extension</p>
+            </div>
+
+            <div class="install-steps">
+                <div class="install-step">
+                    <div class="step-number">1</div>
+                    <h3>VS Code Command</h3>
+                    <p>Press <code>Ctrl+P</code> and type:<br><code>ext install neurolint.neurolint-vscode</code></p>
+                </div>
+
+                <div class="install-step">
+                    <div class="step-number">2</div>
+                    <h3>Marketplace</h3>
+                    <p>Search "NeuroLint" in the VS Code Extensions panel or visit the VS Code Marketplace</p>
+                </div>
+
+                <div class="install-step">
+                    <div class="step-number">3</div>
+                    <h3>Direct Link</h3>
+                    <p>Click the "Install from VS Code" button to open directly in your editor</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="vscode:extension/neurolint.neurolint-vscode" class="btn btn-primary">
+                    Install Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="section">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;">Trusted by Developers</h2>
+            </div>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <h3>50K+</h3>
+                    <p>Downloads</p>
+                </div>
+                <div class="stat-item">
+                    <h3>4.8★</h3>
+                    <p>Average Rating</p>
+                </div>
+                <div class="stat-item">
+                    <h3>1M+</h3>
+                    <p>Issues Fixed</p>
+                </div>
+                <div class="stat-item">
+                    <h3>99.9%</h3>
+                    <p>Uptime</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section" style="background: linear-gradient(135deg, var(--primary-blue), var(--blue-light)); color: white;">
+        <div class="container" style="text-align: center;">
+            <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;">Ready to Transform Your Code?</h2>
+            <p style="font-size: 1.125rem; margin-bottom: 2rem; opacity: 0.9;">Join thousands of developers who are writing better code with NeuroLint</p>
+            
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="vscode:extension/neurolint.neurolint-vscode" class="btn" style="background: white; color: var(--primary-blue);">
+                    Install Extension
+                </a>
+                <a href="https://docs.neurolint.dev/vscode" class="btn" style="background: transparent; border: 1px solid rgba(255,255,255,0.3); color: white;">
+                    View Documentation
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>NeuroLint</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">Advanced code analysis and transformation platform for modern developers.</p>
+                    <div style="display: flex; gap: 1rem;">
+                        <a href="https://github.com/Alcatecable" style="color: var(--text-secondary);">GitHub</a>
+                        <a href="https://forum.neurolint.dev" style="color: var(--text-secondary);">Forum</a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Tools</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://app.neurolint.dev">Web Application</a></li>
+                        <li><a href="https://vs.neurolint.dev">VS Code Extension</a></li>
+                        <li><a href="https://cli.neurolint.dev">CLI Tool</a></li>
+                        <li><a href="https://docs.neurolint.dev/api">REST API</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://docs.neurolint.dev">Documentation</a></li>
+                        <li><a href="https://docs.neurolint.dev/getting-started">Getting Started</a></li>
+                        <li><a href="https://docs.neurolint.dev/api">API Reference</a></li>
+                        <li><a href="https://docs.neurolint.dev/examples">Examples</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://forum.neurolint.dev">Community Forum</a></li>
+                        <li><a href="mailto:founder@neurolint.dev">Contact Support</a></li>
+                        <li><a href="https://docs.neurolint.dev/troubleshooting">Troubleshooting</a></li>
+                        <li><a href="https://app.neurolint.dev/contact">Enterprise</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 NeuroLint. Built with ❤️ for developers.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Add some interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate elements on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe feature cards
+            document.querySelectorAll('.feature-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                observer.observe(card);
+            });
+
+            // Quick fix simulation
+            const quickFix = document.querySelector('.quick-fix');
+            if (quickFix) {
+                quickFix.addEventListener('click', function() {
+                    this.style.background = 'rgba(34, 197, 94, 0.2)';
+                    this.innerHTML = '✅ <strong>Applied!</strong> Key prop added successfully';
+                    
+                    // Update the code
+                    setTimeout(() => {
+                        const warningLine = document.querySelector('.syntax-warning');
+                        if (warningLine) {
+                            warningLine.innerHTML = 'key={user.id} className="user"';
+                            warningLine.classList.remove('syntax-warning');
+                            warningLine.style.background = 'rgba(34, 197, 94, 0.2)';
+                        }
+                    }, 500);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
