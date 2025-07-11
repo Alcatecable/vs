@@ -1,42 +1,63 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NeuroLint VS Code Extension – Real-time Code Analysis</title>
-    <meta name="description" content="The NeuroLint VS Code Extension brings real-time code analysis, smart suggestions, and one-click fixes directly to your editor. Boost productivity and code quality without leaving VS Code." />
+    <meta
+      name="description"
+      content="The NeuroLint VS Code Extension brings real-time code analysis, smart suggestions, and one-click fixes directly to your editor. Boost productivity and code quality without leaving VS Code."
+    />
     <link rel="icon" type="image/png" href="/favico.png" />
     <link rel="canonical" href="https://vs.neurolint.dev/" />
     <!-- Open Graph -->
-    <meta property="og:title" content="NeuroLint VS Code Extension – Real-time Code Analysis" />
-    <meta property="og:description" content="The NeuroLint VS Code Extension brings real-time code analysis, smart suggestions, and one-click fixes directly to your editor. Boost productivity and code quality without leaving VS Code." />
+    <meta
+      property="og:title"
+      content="NeuroLint VS Code Extension – Real-time Code Analysis"
+    />
+    <meta
+      property="og:description"
+      content="The NeuroLint VS Code Extension brings real-time code analysis, smart suggestions, and one-click fixes directly to your editor. Boost productivity and code quality without leaving VS Code."
+    />
     <meta property="og:image" content="https://vs.neurolint.dev/og-image.png" />
     <meta property="og:url" content="https://vs.neurolint.dev/" />
     <meta property="og:type" content="website" />
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="NeuroLint VS Code Extension – Real-time Code Analysis" />
-    <meta name="twitter:description" content="The NeuroLint VS Code Extension brings real-time code analysis, smart suggestions, and one-click fixes directly to your editor. Boost productivity and code quality without leaving VS Code." />
-    <meta name="twitter:image" content="https://vs.neurolint.dev/og-image.png" />
+    <meta
+      name="twitter:title"
+      content="NeuroLint VS Code Extension – Real-time Code Analysis"
+    />
+    <meta
+      name="twitter:description"
+      content="The NeuroLint VS Code Extension brings real-time code analysis, smart suggestions, and one-click fixes directly to your editor. Boost productivity and code quality without leaving VS Code."
+    />
+    <meta
+      name="twitter:image"
+      content="https://vs.neurolint.dev/og-image.png"
+    />
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "NeuroLint VS Code Extension",
-      "url": "https://vs.neurolint.dev/",
-      "applicationCategory": "DeveloperTool",
-      "operatingSystem": "Windows, macOS, Linux",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "NeuroLint VS Code Extension",
+        "url": "https://vs.neurolint.dev/",
+        "applicationCategory": "DeveloperTool",
+        "operatingSystem": "Windows, macOS, Linux",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
       }
-    }
     </script>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
       :root {
         --background: #000000;
@@ -48,10 +69,11 @@
         --surface: #1a1a1a;
         --border: #333333;
         --muted: #a6a6a6;
-        --font-sans: 'Inter', system-ui, sans-serif;
-        --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+        --font-sans: "Inter", system-ui, sans-serif;
+        --font-mono: "JetBrains Mono", "Fira Code", "Consolas", monospace;
       }
-      html, body {
+      html,
+      body {
         background: var(--background);
         color: var(--foreground);
         font-family: var(--font-sans);
@@ -68,7 +90,7 @@
         top: 0;
         z-index: 50;
         width: 100%;
-        background: rgba(0,0,0,0.95);
+        background: rgba(0, 0, 0, 0.95);
         border-bottom: 1px solid var(--border);
         backdrop-filter: blur(12px);
       }
@@ -104,9 +126,12 @@
         font-size: 1rem;
         padding: 0.5rem 1rem;
         border-radius: 8px;
-        transition: color 0.2s, background 0.2s;
+        transition:
+          color 0.2s,
+          background 0.2s;
       }
-      .nav a:hover, .nav a.active {
+      .nav a:hover,
+      .nav a.active {
         color: #fff;
         background: #23233b;
       }
@@ -118,7 +143,9 @@
         border-radius: 8px;
         border: none;
         cursor: pointer;
-        transition: background 0.2s, color 0.2s;
+        transition:
+          background 0.2s,
+          color 0.2s;
         margin-left: 0.5rem;
       }
       .nav .btn:hover {
@@ -173,8 +200,11 @@
         border-radius: 12px;
         border: none;
         cursor: pointer;
-        transition: background 0.2s, color 0.2s, transform 0.2s;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+        transition:
+          background 0.2s,
+          color 0.2s,
+          transform 0.2s;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
       }
       .hero-actions .btn:hover {
         background: #f5f5f5;
@@ -194,15 +224,17 @@
         border: 1.5px solid var(--border);
         border-radius: 18px;
         padding: 2.5rem 2rem 2rem 2rem;
-        box-shadow: 0 2px 16px rgba(0,0,0,0.10);
+        box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        transition: border 0.2s, box-shadow 0.2s;
+        transition:
+          border 0.2s,
+          box-shadow 0.2s;
       }
       .feature-card:hover {
         border-color: var(--blue-accent);
-        box-shadow: 0 4px 32px rgba(0,102,255,0.10);
+        box-shadow: 0 4px 32px rgba(0, 102, 255, 0.1);
       }
       .feature-title {
         font-size: 1.4rem;
@@ -253,7 +285,8 @@
         font-size: 0.95rem;
       }
       @media (max-width: 700px) {
-        .header-inner, .footer-inner {
+        .header-inner,
+        .footer-inner {
           flex-direction: column;
           gap: 1rem;
         }
@@ -268,55 +301,116 @@
     <header class="header">
       <div class="header-inner">
         <a href="/" class="logo">
-          <img src="/vs/logo-forum-vs.png" alt="NeuroLint VS Code Logo" />
+          <img src="/Bee logo.png" alt="NeuroLint VS Code Logo" />
         </a>
         <nav class="nav">
-          <a href="https://app.neurolint.dev" target="_blank" rel="noopener noreferrer">App</a>
-          <a href="https://app.neurolint.dev" target="_blank" rel="noopener noreferrer">Dashboard</a>
-          <a href="https://docs.neurolint.dev" target="_blank" rel="noopener noreferrer">Docs</a>
-          <a href="https://forum.neurolint.dev" target="_blank" rel="noopener noreferrer">Forum</a>
-          <a href="https://app.neurolint.dev/login" target="_blank" rel="noopener noreferrer">Log In</a>
-          <a href="https://app.neurolint.dev/signup" target="_blank" rel="noopener noreferrer" class="btn">Sign Up</a>
+          <a
+            href="https://app.neurolint.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            >App</a
+          >
+          <a
+            href="https://app.neurolint.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Dashboard</a
+          >
+          <a
+            href="https://docs.neurolint.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Docs</a
+          >
+          <a
+            href="https://forum.neurolint.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Forum</a
+          >
+          <a
+            href="https://app.neurolint.dev/login"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Log In</a
+          >
+          <a
+            href="https://app.neurolint.dev/signup"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn"
+            >Sign Up</a
+          >
         </nav>
       </div>
     </header>
     <!-- Hero Section -->
     <section class="hero">
-      <img src="/vs/logo-forum-vs.png" alt="NeuroLint VS Code Logo" class="hero-logo" />
+      <img
+        src="/vs/logo-forum-vs.png"
+        alt="NeuroLint VS Code Logo"
+        class="hero-logo"
+      />
       <div class="typewriter" id="typewriter"></div>
       <div class="hero-desc">
-        The NeuroLint VS Code Extension brings real-time code analysis, smart suggestions, and one-click fixes directly to your editor. Boost productivity and code quality without leaving VS Code.
+        The NeuroLint VS Code Extension brings real-time code analysis, smart
+        suggestions, and one-click fixes directly to your editor. Boost
+        productivity and code quality without leaving VS Code.
       </div>
       <div class="hero-actions">
-        <a href="https://marketplace.visualstudio.com/items?itemName=neurolint.neurolint" target="_blank" rel="noopener noreferrer" class="btn">Install Extension</a>
-        <a href="https://docs.neurolint.dev/vscode" target="_blank" rel="noopener noreferrer" class="btn">VS Code Docs</a>
+        <a
+          href="https://marketplace.visualstudio.com/items?itemName=neurolint.neurolint"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn"
+          >Install Extension</a
+        >
+        <a
+          href="https://docs.neurolint.dev/vscode"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn"
+          >VS Code Docs</a
+        >
       </div>
     </section>
     <!-- Features Section -->
     <section class="features">
       <div class="feature-card">
         <div class="feature-title">Real-time Analysis</div>
-        <div class="feature-desc">Get instant feedback as you type with AST-powered code analysis.</div>
+        <div class="feature-desc">
+          Get instant feedback as you type with AST-powered code analysis.
+        </div>
       </div>
       <div class="feature-card">
         <div class="feature-title">Editor Integration</div>
-        <div class="feature-desc">Seamless integration with VS Code for a native experience.</div>
+        <div class="feature-desc">
+          Seamless integration with VS Code for a native experience.
+        </div>
       </div>
       <div class="feature-card">
         <div class="feature-title">One-click Fixes</div>
-        <div class="feature-desc">Automatically fix common issues with a single click.</div>
+        <div class="feature-desc">
+          Automatically fix common issues with a single click.
+        </div>
       </div>
       <div class="feature-card">
         <div class="feature-title">Smart Suggestions</div>
-        <div class="feature-desc">Intelligent recommendations for code improvements and best practices.</div>
+        <div class="feature-desc">
+          Intelligent recommendations for code improvements and best practices.
+        </div>
       </div>
       <div class="feature-card">
         <div class="feature-title">Instant Feedback</div>
-        <div class="feature-desc">See issues and suggestions in real time as you code.</div>
+        <div class="feature-desc">
+          See issues and suggestions in real time as you code.
+        </div>
       </div>
       <div class="feature-card">
         <div class="feature-title">Cross-Platform</div>
-        <div class="feature-desc">Works on Windows, macOS, and Linux. Consistent results everywhere.</div>
+        <div class="feature-desc">
+          Works on Windows, macOS, and Linux. Consistent results everywhere.
+        </div>
       </div>
     </section>
     <!-- Footer -->
@@ -331,7 +425,9 @@
           <a href="https://cli.neurolint.dev">CLI Tool</a>
           <a href="mailto:founder@neurolint.com">Contact</a>
         </div>
-        <div class="footer-copy">&copy; 2024 NeuroLint. All rights reserved.</div>
+        <div class="footer-copy">
+          &copy; 2024 NeuroLint. All rights reserved.
+        </div>
       </div>
     </footer>
     <script>
@@ -341,12 +437,12 @@
         "Editor Integration",
         "One-click Fixes",
         "Smart Suggestions",
-        "Instant Feedback"
+        "Instant Feedback",
       ];
       let wordIndex = 0;
       let charIndex = 0;
       let isDeleting = false;
-      let typewriterEl = document.getElementById('typewriter');
+      let typewriterEl = document.getElementById("typewriter");
       function type() {
         const word = words[wordIndex];
         if (isDeleting) {
