@@ -1,0 +1,19 @@
+{
+  "name": "neurolint-vs-extension-site",
+  "version": "1.0.0",
+  "description": "NeuroLint VS Code Extension landing page",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python -m http.server 8080",
+    "serve": "python -m http.server 8080",
+    "start": "python -m http.server 8080"
+  },
+  "keywords": [
+    "neurolint",
+    "vscode",
+    "extension",
+    "static-site"
+  ],
+  "author": "NeuroLint",
+  "license": "MIT"
+}
