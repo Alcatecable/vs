@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NeuroLint Forum – Community Support & Knowledge Sharing</title>
+    <meta name="description" content="Join the NeuroLint Forum to connect with the community, share best practices, ask questions, and get help from experts and peers." />
+    <link rel="icon" type="image/png" href="/favico.png" />
+    <link rel="canonical" href="https://forum.neurolint.dev/" />
+    <!-- Open Graph -->
+    <meta property="og:title" content="NeuroLint Forum – Community Support & Knowledge Sharing" />
+    <meta property="og:description" content="Join the NeuroLint Forum to connect with the community, share best practices, ask questions, and get help from experts and peers." />
+    <meta property="og:image" content="https://forum.neurolint.dev/og-image.png" />
+    <meta property="og:url" content="https://forum.neurolint.dev/" />
+    <meta property="og:type" content="website" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="NeuroLint Forum – Community Support & Knowledge Sharing" />
+    <meta name="twitter:description" content="Join the NeuroLint Forum to connect with the community, share best practices, ask questions, and get help from experts and peers." />
+    <meta name="twitter:image" content="https://forum.neurolint.dev/og-image.png" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "DiscussionForumPosting",
+      "headline": "NeuroLint Forum – Community Support & Knowledge Sharing",
+      "url": "https://forum.neurolint.dev/",
+      "about": "NeuroLint, code analysis, community, support, best practices"
+    }
+    </script>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --background: #000000;
+        --foreground: #fafafa;
+        --primary: #ffffff;
+        --primary-foreground: #000000;
+        --blue-accent: #0066ff;
+        --card: #1a1a1a;
+        --surface: #1a1a1a;
+        --border: #333333;
+        --muted: #a6a6a6;
+        --font-sans: 'Inter', system-ui, sans-serif;
+        --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      }
+      html, body {
+        background: var(--background);
+        color: var(--foreground);
+        font-family: var(--font-sans);
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        width: 100%;
+        background: rgba(0,0,0,0.95);
+        border-bottom: 1px solid var(--border);
+        backdrop-filter: blur(12px);
+      }
+      .header-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.5rem 1.5rem;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-weight: 800;
+        font-size: 1.5rem;
+        color: var(--foreground);
+      }
+      .logo img {
+        width: 120px;
+        height: auto;
+        object-fit: contain;
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+      .nav a {
+        color: #d1d5db;
+        font-weight: 500;
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        transition: color 0.2s, background 0.2s;
+      }
+      .nav a:hover, .nav a.active {
+        color: #fff;
+        background: #23233b;
+      }
+      .nav .btn {
+        background: var(--primary);
+        color: var(--primary-foreground);
+        font-weight: 600;
+        padding: 0.5rem 1.5rem;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+        margin-left: 0.5rem;
+      }
+      .nav .btn:hover {
+        background: #f5f5f5;
+      }
+      .hero {
+        min-height: 80vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 5rem 1rem 2rem 1rem;
+        position: relative;
+      }
+      .hero-logo {
+        width: 180px;
+        height: auto;
+        margin-bottom: 2rem;
+        object-fit: contain;
+      }
+      .typewriter {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #fff;
+        min-height: 3.5rem;
+        letter-spacing: -0.02em;
+        margin-bottom: 1.5rem;
+        font-family: var(--font-sans);
+      }
+      .hero-desc {
+        font-size: 1.25rem;
+        color: #d1d5db;
+        margin-bottom: 2.5rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .hero-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .hero-actions .btn {
+        background: var(--primary);
+        color: var(--primary-foreground);
+        font-weight: 700;
+        font-size: 1.1rem;
+        padding: 1rem 2.5rem;
+        border-radius: 12px;
+        border: none;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s, transform 0.2s;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+      }
+      .hero-actions .btn:hover {
+        background: #f5f5f5;
+        color: #000;
+        transform: translateY(-2px) scale(1.03);
+      }
+      .features {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 4rem 1rem 2rem 1rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+      }
+      .feature-card {
+        background: var(--surface);
+        border: 1.5px solid var(--border);
+        border-radius: 18px;
+        padding: 2.5rem 2rem 2rem 2rem;
+        box-shadow: 0 2px 16px rgba(0,0,0,0.10);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        transition: border 0.2s, box-shadow 0.2s;
+      }
+      .feature-card:hover {
+        border-color: var(--blue-accent);
+        box-shadow: 0 4px 32px rgba(0,102,255,0.10);
+      }
+      .feature-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 0.5rem;
+      }
+      .feature-desc {
+        color: #d1d5db;
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+      }
+      .footer {
+        width: 100%;
+        padding: 2.5rem 1rem 1.5rem 1rem;
+        background: #111;
+        border-top: 1px solid var(--border);
+        color: #a6a6a6;
+        font-size: 1rem;
+        margin-top: 4rem;
+      }
+      .footer-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .footer-links {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 1rem;
+      }
+      .footer-links a {
+        color: #a6a6a6;
+        font-weight: 500;
+        transition: color 0.2s;
+      }
+      .footer-links a:hover {
+        color: #fff;
+      }
+      .footer-copy {
+        color: #666;
+        font-size: 0.95rem;
+      }
+      @media (max-width: 700px) {
+        .header-inner, .footer-inner {
+          flex-direction: column;
+          gap: 1rem;
+        }
+        .features {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="header-inner">
+        <a href="/" class="logo">
+          <img src="/forum/logo-forum-vs.png" alt="NeuroLint Forum Logo" />
+        </a>
+        <nav class="nav">
+          <a href="https://app.neurolint.dev" target="_blank" rel="noopener noreferrer">App</a>
+          <a href="https://app.neurolint.dev" target="_blank" rel="noopener noreferrer">Dashboard</a>
+          <a href="https://docs.neurolint.dev" target="_blank" rel="noopener noreferrer">Docs</a>
+          <a href="https://forum.neurolint.dev" target="_blank" rel="noopener noreferrer">Forum</a>
+          <a href="https://app.neurolint.dev/login" target="_blank" rel="noopener noreferrer">Log In</a>
+          <a href="https://app.neurolint.dev/signup" target="_blank" rel="noopener noreferrer" class="btn">Sign Up</a>
+        </nav>
+      </div>
+    </header>
+    <!-- Hero Section -->
+    <section class="hero">
+      <img src="/forum/logo-forum-vs.png" alt="NeuroLint Forum Logo" class="hero-logo" />
+      <div class="typewriter" id="typewriter"></div>
+      <div class="hero-desc">
+        Join the NeuroLint Forum to connect with the community, share best practices, ask questions, and get help from experts and peers.
+      </div>
+      <div class="hero-actions">
+        <a href="https://forum.neurolint.dev" target="_blank" rel="noopener noreferrer" class="btn">Visit Forum</a>
+        <a href="https://docs.neurolint.dev/community" target="_blank" rel="noopener noreferrer" class="btn">Community Docs</a>
+      </div>
+    </section>
+    <!-- Features Section -->
+    <section class="features">
+      <div class="feature-card">
+        <div class="feature-title">Community Support</div>
+        <div class="feature-desc">Get answers from NeuroLint experts and users worldwide.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-title">Best Practices</div>
+        <div class="feature-desc">Learn and share the best ways to use NeuroLint in your projects.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-title">Share Knowledge</div>
+        <div class="feature-desc">Post guides, tips, and solutions to help others succeed.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-title">Ask Questions</div>
+        <div class="feature-desc">Stuck? Ask the community and get help fast.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-title">Get Help</div>
+        <div class="feature-desc">Access resources and support for all your NeuroLint needs.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-title">Events & Announcements</div>
+        <div class="feature-desc">Stay up to date with the latest news and community events.</div>
+      </div>
+    </section>
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-links">
+          <a href="https://neurolint.dev">Home</a>
+          <a href="https://app.neurolint.dev">App</a>
+          <a href="https://docs.neurolint.dev">Docs</a>
+          <a href="https://forum.neurolint.dev">Forum</a>
+          <a href="https://vs.neurolint.dev">VS Code Extension</a>
+          <a href="https://cli.neurolint.dev">CLI Tool</a>
+          <a href="mailto:founder@neurolint.com">Contact</a>
+        </div>
+        <div class="footer-copy">&copy; 2024 NeuroLint. All rights reserved.</div>
+      </div>
+    </footer>
+    <script>
+      // Typewriter effect for hero
+      const words = [
+        "Community Support",
+        "Best Practices",
+        "Share Knowledge",
+        "Ask Questions",
+        "Get Help"
+      ];
+      let wordIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+      let typewriterEl = document.getElementById('typewriter');
+      function type() {
+        const word = words[wordIndex];
+        if (isDeleting) {
+          charIndex--;
+        } else {
+          charIndex++;
+        }
+        typewriterEl.textContent = word.substring(0, charIndex);
+        let delay = isDeleting ? 60 : 110;
+        if (!isDeleting && charIndex === word.length) {
+          delay = 1200;
+          isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+          isDeleting = false;
+          wordIndex = (wordIndex + 1) % words.length;
+          delay = 400;
+        }
+        setTimeout(type, delay);
+      }
+      type();
+    </script>
+  </body>
+</html>
