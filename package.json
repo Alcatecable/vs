@@ -4,9 +4,9 @@
   "description": "NeuroLint VS Code Extension landing page",
   "main": "index.html",
   "scripts": {
-    "dev": "python -m http.server 8080",
-    "serve": "python -m http.server 8080",
-    "start": "python -m http.server 8080"
+    "dev": "serve . -p 8080",
+    "serve": "serve . -p 8080",
+    "start": "serve . -p 8080"
   },
   "keywords": [
     "neurolint",
